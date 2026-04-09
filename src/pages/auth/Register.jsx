@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { registerUser } from "../../services/auth.service.js";
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -8,9 +9,15 @@ export const Register = () => {
     password: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
+    
+    try {
+      const data = await registerUser(formData);
+      console.log('Register successful', data);
+    } catch (error) {
+      console.error(error.response?.data?.message);
+    }
   };
 
   return (
@@ -51,7 +58,7 @@ export const Register = () => {
         <button type="submit">Register</button>
 
         <p>
-          no account? <Link to="/login">Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </form>
     </div>
