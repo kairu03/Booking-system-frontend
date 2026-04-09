@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { loginUser } from "../../services/auth.service";
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,9 +8,15 @@ export const Login = () => {
     password: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    try {
+      const data = await loginUser(formData);
+      console.log('Login successful', data);
+    } catch (error) {
+      console.error(error.response?.data?.message);
+    }
   };
 
   return (
@@ -40,7 +47,7 @@ export const Login = () => {
         <button type="submit">Login</button>
 
         <p>
-          no account? <Link to="/register">Register</Link>
+          No account? <Link to="/register">Register</Link>
         </p>
       </form>
     </div>
