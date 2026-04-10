@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { loginUser } from "../../services/auth.service";
+import { useAuth } from "../../context/AuthProvider";
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -8,11 +9,16 @@ export const Login = () => {
     password: '',
   });
 
+  const { login } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const data = await loginUser(formData);
+
+      login(data.token)
+
       console.log('Login successful', data);
     } catch (error) {
       console.error(error.response?.data?.message);
