@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { getAllCategories } from "../services/category.service";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const [categories, setCategories] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -27,7 +30,11 @@ export const Home = () => {
           <p>No categories available yet.</p>)
         : (
           categories.map((category) => (
-            <div key={category._id}>
+            <div
+              key={category._id}
+              onClick={() => navigate(`categories/${category._id}/resources`)}
+              style={{ cursor: "pointer", border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}
+            >
               <h2>{category.name}</h2>
               <p>{category.description}</p>
             </div>
