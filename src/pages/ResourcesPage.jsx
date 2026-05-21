@@ -16,8 +16,8 @@ export const ResourcesPage = () => {
       }
     }
 
-    fetchResourcesByCategory(categoryId);
-  }, [categoryId]);
+    fetchResourcesByCategory();
+  }, [categoryId]); 
 
 
   return (
